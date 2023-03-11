@@ -16,8 +16,8 @@ function checkStringLength(string, maxLenght){
 /*
 module 4-task1
 */
-
-const array = new Array(25);
+const number = getNumber(25);
+const array = new Array(number);
 
 for (let i = 1; i <= array.length; i++){
   const element = generatePhoto(i,i);
@@ -35,4 +35,7 @@ function generatePhoto(id, url){
     comments: returnNumberFrom(0,200),
   };
   return photo;
+}
+function getNumber(num){
+  return num;
 }
