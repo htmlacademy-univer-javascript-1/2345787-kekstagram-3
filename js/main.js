@@ -2,7 +2,7 @@
 const from = 0;
 const before = 10;
 const res = returnNumberFrom(from,before);
-console.log('Число из диапазона ' + from + ' : ' + before + ' равно = '+ res);
+//console.log('Число из диапазона ' + from + ' : ' + before + ' равно = '+ res);
 
 function returnNumberFrom(a, b){
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -12,10 +12,10 @@ function returnNumberFrom(a, b){
 }
 
 //task2
-const string = 'Строка';
-const maxLenght = 5;
-const answer = checkStringLength(string,maxLenght);
-console.log(answer);
+const line = 'Строка';
+const mLenght = 5;
+const answer = checkStringLength(line,mLenght);
+//console.log(answer);
 
 function checkStringLength(string, maxLenght){
   return string.length <= maxLenght;
@@ -25,14 +25,14 @@ function checkStringLength(string, maxLenght){
 module 4-task1
 */
 
-let array = new Array(25);
+const array = new Array(25);
 
 for (let i = 1; i <= array.length; i++){
-  let element = generatePhoto(i,i);
+  const element = generatePhoto(i,i);
   array[i-1] = element;
-};
+}
 
-array.forEach(element => console.log(element));
+//array.forEach(element => console.log(element));
 
 function generatePhoto(id, url){
   let descriptions = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
