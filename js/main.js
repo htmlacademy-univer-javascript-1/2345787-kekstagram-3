@@ -1,30 +1,41 @@
 //task1
-let from = 0;
-let before = 10;
-let result = returnNumberFrom(from,before);
-console.log('Число из диапазона ' + from + ' : ' + before + ' равно = '+ result);
 
-function returnNumberFrom(from, before){
-  if(before > from){
-    return Math.random() * (before - from) + from;
-  }
-  if(frome == before){
-    return from;
-  }
-  return Math.random() * (from - before) + before;
+function returnNumberFrom(a, b){
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
 }
 
 //task2
-let line = 'Строка';
-let maxLenght = 5;
-let answer = checkLength(line,maxLenght);
-console.log(answer);
-
-function checkLength(line, maxLenght){
-  if (line.length > maxLenght){
-    return false;
-  }
-  return true;
+//eslint-disable-next-line
+function checkStringLength(string, maxLenght){
+  return string.length <= maxLenght;
 }
 
+/*
+module 4-task1
+*/
+const number = getNumber(25);
+const array = new Array(number);
 
+for (let i = 1; i <= array.length; i++){
+  const element = generatePhoto(i,i);
+  array[i-1] = element;
+}
+
+function generatePhoto(id, url){
+  const descriptions = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
+  const urlString = `photos/${url}.jpg`;
+  const photo = {
+    id: id,
+    url: urlString,
+    description: descriptions[returnNumberFrom(0,(descriptions.length - 1))],
+    likes: returnNumberFrom(15,200),
+    comments: returnNumberFrom(0,200),
+  };
+  return photo;
+}
+function getNumber(num){
+  return num;
+}
