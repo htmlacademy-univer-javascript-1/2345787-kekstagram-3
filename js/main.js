@@ -2,29 +2,46 @@
 let from = 0;
 let before = 10;
 let result = returnNumberFrom(from,before);
-console.log('Число из диапазона ' + from + ' : ' + before + ' равно = '+ result);
+//console.log('Число из диапазона ' + from + ' : ' + before + ' равно = '+ result);
 
-function returnNumberFrom(from, before){
-  if(before > from){
-    return Math.random() * (before - from) + from;
-  }
-  if(frome == before){
-    return from;
-  }
-  return Math.random() * (from - before) + before;
+function returnNumberFrom(a, b){
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
 }
 
 //task2
-let line = 'Строка';
+let string = 'Строка';
 let maxLenght = 5;
-let answer = checkLength(line,maxLenght);
-console.log(answer);
+let answer = checkStringLength(string,maxLenght);
+//console.log(answer);
 
-function checkLength(line, maxLenght){
-  if (line.length > maxLenght){
-    return false;
-  }
-  return true;
+function checkStringLength(string, maxLenght){
+  return string.length <= maxLenght;
 }
 
+/*
+module 4-task1
+*/
 
+let array = new Array(25);
+
+for (let i = 1; i <= array.length; i++){
+  let element = generatePhoto(i,i);
+  array[i-1] = element;
+};
+
+array.forEach(element => console.log(element));
+
+function generatePhoto(id, url){
+  let descriptions = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
+  let photo = {
+    id: id,
+    url: 'photos/' + url + '.jpg',
+    description: descriptions[returnNumberFrom(0,(descriptions.length - 1))],
+    likes: returnNumberFrom(15,200),
+    comments: returnNumberFrom(0,200),
+  }
+  return photo;
+}
