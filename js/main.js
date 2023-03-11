@@ -26,7 +26,7 @@ for (let i = 1; i <= array.length; i++){
 
 function generatePhoto(id, url){
   const descriptions = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
-  const urlString = `photos/` + url + `.jpg`;
+  const urlString = `photos/${url}.jpg`;
   const photo = {
     id: id,
     url: urlString,
