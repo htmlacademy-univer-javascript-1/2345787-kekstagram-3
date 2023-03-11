@@ -1,8 +1,8 @@
 //task1
-let from = 0;
-let before = 10;
-let result = returnNumberFrom(from,before);
-//console.log('Число из диапазона ' + from + ' : ' + before + ' равно = '+ result);
+const from = 0;
+const before = 10;
+const res = returnNumberFrom(from,before);
+console.log('Число из диапазона ' + from + ' : ' + before + ' равно = '+ res);
 
 function returnNumberFrom(a, b){
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -12,10 +12,10 @@ function returnNumberFrom(a, b){
 }
 
 //task2
-let string = 'Строка';
-let maxLenght = 5;
-let answer = checkStringLength(string,maxLenght);
-//console.log(answer);
+const string = 'Строка';
+const maxLenght = 5;
+const answer = checkStringLength(string,maxLenght);
+console.log(answer);
 
 function checkStringLength(string, maxLenght){
   return string.length <= maxLenght;
