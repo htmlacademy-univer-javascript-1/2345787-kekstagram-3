@@ -38,13 +38,13 @@ for (let i = 1; i <= array.length; i++){
 //array.forEach(element => console.log(element));
 
 function generatePhoto(id, url){
-  let descriptions = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
-  let photo = {
+  const descriptions = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
+  const photo = {
     id: id,
     url: 'photos/' + url + '.jpg',
     description: descriptions[returnNumberFrom(0,(descriptions.length - 1))],
     likes: returnNumberFrom(15,200),
     comments: returnNumberFrom(0,200),
-  }
+  };
   return photo;
 }
