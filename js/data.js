@@ -1,4 +1,5 @@
 import {returnNumberFrom} from './utility.js';
+import {getNumber} from './utility.js';
 
 function generatePhoto(id, url){
   const descriptions = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
@@ -13,4 +14,16 @@ function generatePhoto(id, url){
   return photo;
 }
 
-export {generatePhoto};
+function generateArrayOfPhotos(){
+  const specifiedNumber = getNumber(25);
+  const array = new Array(specifiedNumber);
+
+  for (let i = 1; i <= array.length; i++){
+    const element = generatePhoto(i, i);
+    array[i - 1] = element;
+  }
+
+  return array;
+}
+
+export {generatePhoto, generateArrayOfPhotos};
