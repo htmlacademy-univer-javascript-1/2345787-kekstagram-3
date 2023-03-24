@@ -11,7 +11,7 @@ function drawPictures(array){
     fragment.appendChild(picture);
   }
 
-  const photoBlock = document.querySelector(".pictures");
+  const photoBlock = document.querySelector('.pictures');
   photoBlock.appendChild(fragment);
 }
 
