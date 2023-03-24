@@ -1,5 +1,5 @@
 import {generateArrayOfPhotos} from './data.js';
 import {drawPictures} from './draw.js';
 
-let array = generateArrayOfPhotos();
+const array = generateArrayOfPhotos();
 drawPictures(array);
