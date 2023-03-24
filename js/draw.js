@@ -1,3 +1,4 @@
+
 function drawPictures(array){
   const fragment = document.createDocumentFragment();
   const template = document.querySelector('#picture');
