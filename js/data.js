@@ -1,13 +1,13 @@
 import {returnNumberFrom} from './utility.js';
 import {getNumber} from './utility.js';
+const DESCRIPTIONS = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
 
 function generatePhoto(id, url){
-  const descriptions = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
   const urlString = `photos/${url}.jpg`;
   const photo = {
     id: id,
     url: urlString,
-    description: descriptions[returnNumberFrom(0,(descriptions.length - 1))],
+    description: DESCRIPTIONS[returnNumberFrom(0,(DESCRIPTIONS.length - 1))],
     likes: returnNumberFrom(15,200),
     comments: returnNumberFrom(0,200),
   };
