@@ -1,12 +1,12 @@
-const uploadButton = document.querySelector("#upload-file");
-const uploadOverlay = document.querySelector(".img-upload__overlay");
-const closeButton = document.querySelector("#upload-cancel");
+const uploadButton = document.querySelector('#upload-file');
+const uploadOverlay = document.querySelector('.img-upload__overlay');
+const closeButton = document.querySelector('#upload-cancel');
 
 uploadButton.addEventListener('change', openEditor);
 document.addEventListener('keyup', closeEditor);
 closeButton.addEventListener('click', closeEditor);
 
-function openEditor(evt){
+function openEditor(){
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 }
