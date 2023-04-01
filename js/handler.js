@@ -1,6 +1,7 @@
 const uploadButton = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('#upload-cancel');
+const imgUploadForm = document.querySelector('.img-upload__form');
 
 uploadButton.addEventListener('change', openEditor);
 document.addEventListener('keyup', closeEditor);
@@ -15,7 +16,7 @@ function closeEditor(evt){
   if (evt.key === 'Escape' || evt.target === closeButton){
     uploadOverlay.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    uploadButton.reset();
+    imgUploadForm.reset();
   }
 }
 
