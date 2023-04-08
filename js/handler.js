@@ -62,21 +62,21 @@ scaleDownButton.addEventListener('click', scaleDown);
 //Задание 9.9.2
 const checkBoxes = imgUploadForm.querySelectorAll('.effects__radio');
 
-checkBoxes.forEach(effect => {
+checkBoxes.forEach((effect) => {
   effect.addEventListener('click', applyingEffect);
 });
 
 function applyingEffect(evt){
   const selectedEffect = evt.target;
-  checkBoxes.forEach(effect => {
-    if(effect == selectedEffect && selectedEffect !== currentEffect){
+  checkBoxes.forEach((effect) => {
+    if(effect === selectedEffect && selectedEffect !== currentEffect){
       effect.checked = true;
       currentEffect.checked = false;
       uploadImgPreview.classList.remove(`effects__preview--${currentEffect.value}`);
       uploadImgPreview.classList.add(`effects__preview--${effect.value}`);
       currentEffect = selectedEffect;
     }
-  })
+  });
   resetSlider(selectedEffect);
 }
 
@@ -133,9 +133,9 @@ noUiSlider.create(effectIntensitySlider, {
   step: 1
 });
 
-effectIntensitySlider.noUiSlider.on('update', function (initialSliderValue) {
-  effectLevelValue.value = initialSliderValue;
-  updateEffect(currentEffect, initialSliderValue);
+effectIntensitySlider.noUiSlider.on('update', (sliderValue) => {
+  effectLevelValue.value = sliderValue;
+  updateEffect(currentEffect, sliderValue);
 });
 
 function updateEffect(effect, value){
@@ -157,8 +157,7 @@ function updateEffect(effect, value){
       filterValue = `${filterValues[effect.value]}(${value})`;
       break;
     default:
-      filterValue = '';
-    }
+      filterValue = '';}
   uploadImgPreview.style.filter = filterValue;
 }
 
