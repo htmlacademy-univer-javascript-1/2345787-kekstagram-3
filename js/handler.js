@@ -2,6 +2,9 @@ const uploadButton = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
+const uploadImgPreview = uploadOverlay.querySelector('.img-upload__preview');
+
+let currentEffect = imgUploadForm.querySelector('#effect-none');
 
 uploadButton.addEventListener('change', openEditor);
 document.addEventListener('keyup', closeEditor);
@@ -18,7 +21,7 @@ function closeEditor(evt){
     uploadOverlay.classList.add('hidden');
     document.body.classList.remove('modal-open');
     imgUploadForm.reset();
-    uploadImgPreview.style.transform = `scale(1)`;
+    uploadImgPreview.style.transform = 'scale(1)';
   }
 }
 
@@ -26,18 +29,17 @@ function closeEditor(evt){
 const scaleUpButton = uploadOverlay.querySelector('.scale__control--bigger');
 const scaleDownButton = uploadOverlay.querySelector('.scale__control--smaller');
 const scaleControlForm = uploadOverlay.querySelector('.scale__control--value');
-const uploadImgPreview = uploadOverlay.querySelector('.img-upload__preview');
 
 function scaleUp(){
   let value = Number(scaleControlForm.value.replace('%',''));
   if ((value + 25) > 100){
     value = 100;
-    scaleControlForm.value = `${value}%`
+    scaleControlForm.value = `${value}%`;
   } else {
     value += 25;
-    scaleControlForm.value = `${value}%`
+    scaleControlForm.value = `${value}%`;
   }
-  uploadImgPreview.style.transform = `scale(${value/100})`
+  uploadImgPreview.style.transform = `scale(${value/100})`;
 }
 
 scaleUpButton.addEventListener('click', scaleUp);
@@ -46,23 +48,22 @@ function scaleDown(){
   let value = Number(scaleControlForm.value.replace('%',''));
   if ((value - 25) < 25){
     value = 25;
-    scaleControlForm.value = `${value}%`
+    scaleControlForm.value = `${value}%`;
   } else {
     value -= 25;
-    scaleControlForm.value = `${value}%`
+    scaleControlForm.value = `${value}%`;
   }
-  uploadImgPreview.style.transform = `scale(${value/100})`
+  uploadImgPreview.style.transform = `scale(${value/100})`;
 }
 
 scaleDownButton.addEventListener('click', scaleDown);
 
 
 //Задание 9.9.2
-let currentEffect = imgUploadForm.querySelector('#effect-none');
 const checkBoxes = imgUploadForm.querySelectorAll('.effects__radio');
 
 checkBoxes.forEach(effect => {
-  effect.addEventListener('click', applyingEffect)
+  effect.addEventListener('click', applyingEffect);
 });
 
 function applyingEffect(evt){
