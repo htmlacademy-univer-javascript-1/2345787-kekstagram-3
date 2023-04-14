@@ -81,47 +81,45 @@ function applyingEffect(evt){
 }
 
 //noUiSlider
-
 import '../nouislider/nouislider.js';
-
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectIntensitySlider = document.querySelector('.effect-level__slider');
 
 let initialSliderValue = 100;
 
-const filterValues = {
-  chrome: 'grayscale',
-  sepia: 'sepia',
-  marvin: 'invert',
-  phobos: 'blur',
-  heat: 'brightness'
+const FilterValues = {
+  CHROME: 'grayscale',
+  SEPIA: 'sepia',
+  MARVIN: 'invert',
+  PHOBOS: 'blur',
+  HEAT: 'brightness'
 };
 
-const initialValues = {
-  none: 100,
-  chrome: 0,
-  sepia: 0,
-  marvin: 0,
-  phobos: 0,
-  heat: 1
+const InitialValues = {
+  NONE: 100,
+  CHROME: 0,
+  SEPIA: 0,
+  MARVIN: 0,
+  PHOBOS: 0,
+  HEAT: 1
 };
 
-const maxValues = {
-  none: 100,
-  chrome: 1,
-  sepia: 1,
-  marvin: 100,
-  phobos: 3,
-  heat: 3
+const MaxValues = {
+  NONE: 100,
+  CHROME: 1,
+  SEPIA: 1,
+  MARVIN: 100,
+  PHOBOS: 3,
+  HEAT: 3
 };
 
-const stepValues = {
-  none: 1,
-  chrome: 0.1,
-  sepia: 0.1,
-  marvin: 1,
-  phobos: 0.1,
-  heat: 0.1
+const StepValues = {
+  NONE: 1,
+  CHROME: 0.1,
+  SEPIA: 0.1,
+  MARVIN: 1,
+  PHOBOS: 0.1,
+  HEAT: 0.1
 };
 
 noUiSlider.create(effectIntensitySlider, {
@@ -130,7 +128,8 @@ noUiSlider.create(effectIntensitySlider, {
     min: 0,
     max: 100
   },
-  step: 1
+  step: 1,
+  connect: 'lower'
 });
 
 effectIntensitySlider.noUiSlider.on('update', (sliderValue) => {
@@ -140,21 +139,21 @@ effectIntensitySlider.noUiSlider.on('update', (sliderValue) => {
 
 function updateEffect(effect, value){
   let filterValue = '';
-  switch(currentEffect.value) {
+  switch(currentEffect.value.toLowerCase()) {
     case 'chrome':
-      filterValue = `${filterValues[effect.value]}(${value})`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value})`;
       break;
     case 'sepia':
-      filterValue = `${filterValues[effect.value]}(${value})`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value})`;
       break;
     case 'marvin':
-      filterValue = `${filterValues[effect.value]}(${value}%)`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value}%)`;
       break;
     case 'phobos':
-      filterValue = `${filterValues[effect.value]}(${value}px)`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value}px)`;
       break;
     case 'heat':
-      filterValue = `${filterValues[effect.value]}(${value})`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value})`;
       break;
     default:
       filterValue = '';}
@@ -167,14 +166,15 @@ function resetSlider(effect){
   } else {
     effectIntensitySlider.classList.remove('hidden');
   }
-  initialSliderValue = initialValues[effect.value];
+  initialSliderValue = InitialValues[effect.value.toUpperCase()];
   effectLevelValue.value = initialSliderValue;
+
   effectIntensitySlider.noUiSlider.updateOptions({
-    start: maxValues[effect.value],
+    start: MaxValues[effect.value.toUpperCase()],
     range: {
       min : initialSliderValue,
-      max : maxValues[effect.value]
+      max : MaxValues[effect.value.toUpperCase()]
     },
-    step: stepValues[effect.value]
+    step: StepValues[effect.value.toUpperCase()]
   });
 }
