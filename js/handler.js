@@ -81,7 +81,7 @@ function applyingEffect(evt){
 }
 
 //noUiSlider
-
+import '../nouislider/nouislider.js';
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectIntensitySlider = document.querySelector('.effect-level__slider');
 
