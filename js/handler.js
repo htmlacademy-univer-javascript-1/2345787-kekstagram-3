@@ -167,8 +167,7 @@ function resetSlider(effect){
     effectIntensitySlider.classList.remove('hidden');
   }
   initialSliderValue = InitialValues[effect.value.toUpperCase()];
-  effectLevelValue.value = initialSliderValue
-
+  effectLevelValue.value = initialSliderValue;
 
   effectIntensitySlider.noUiSlider.updateOptions({
     start: MaxValues[effect.value.toUpperCase()],
@@ -177,5 +176,5 @@ function resetSlider(effect){
       max : MaxValues[effect.value.toUpperCase()]
     },
     step: StepValues[effect.value.toUpperCase()]
-  })
+  });
 }
