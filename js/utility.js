@@ -6,8 +6,8 @@ function returnNumberFrom(a, b){
 }
 
 //eslint-disable-next-line
-function checkStringLength(string, maxLenght){
-  return string.length <= maxLenght;
+function checkStringLength(string, minLenght, maxLenght){
+  return ((string.length >= minLenght) && (string.length <= maxLenght));
 }
 
 function getNumber(num){

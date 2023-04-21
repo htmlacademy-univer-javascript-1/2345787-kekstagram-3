@@ -1,7 +1,4 @@
-import {generateArrayOfPhotos} from './data.js';
 import {drawPictures} from './draw.js';
+import { getData , errorNotification} from './connectionServer.js';
 
-const array = generateArrayOfPhotos();
-drawPictures(array);
-
-//Задание 7 часть 2
+getData(drawPictures, errorNotification);

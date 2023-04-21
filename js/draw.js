@@ -1,14 +1,14 @@
 
-function drawPictures(array){
+function drawPictures(photos){
   const fragment = document.createDocumentFragment();
   const template = document.querySelector('#picture');
 
-  for(let i = 0; i < array.length; i++){
+  for(let i = 0; i < photos.length; i++){
     const picture = template.content.cloneNode(true);
-    const randomPicture = array[i];
-    picture.querySelector('.picture__img').src = randomPicture.url;
-    picture.querySelector('.picture__likes').textContent = randomPicture.likes;
-    picture.querySelector('.picture__comments').textContent = randomPicture.comments;
+    const receivedPhoto = photos[i];
+    picture.querySelector('.picture__img').src = receivedPhoto.url;
+    picture.querySelector('.picture__likes').textContent = receivedPhoto.likes;
+    picture.querySelector('.picture__comments').textContent = receivedPhoto.comments;
     fragment.appendChild(picture);
   }
 
