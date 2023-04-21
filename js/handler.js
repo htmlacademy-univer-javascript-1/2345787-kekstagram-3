@@ -215,4 +215,4 @@ function resetSlider(effect){
   });
 }
 
-export {currentEffect, scaleLevel, closeEditor, addEventsOnCloseEditor}
+export {currentEffect, scaleLevel, closeEditor, addEventsOnCloseEditor};

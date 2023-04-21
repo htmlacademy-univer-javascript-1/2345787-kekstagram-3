@@ -5,14 +5,15 @@ const getData = (onSuccess, onError) => {
   fetch(SERVER_URL).then((response)=>{
     if (response.ok) {
       response.json().then((content) => {
-        onSuccess(content)})
+        onSuccess(content);
+      });
     } else {
       onError();
     }
-  })
-}
+  });
+};
 
-function errorNotification(answer){
+function errorNotification(){
   //eslint-disable-next-line
   console.error('Ошибка при получении данных с сервера.')
 }
@@ -30,7 +31,7 @@ const sendData = (onSuccess, onError, body)=> {
     } else {
       onError();
     }
-  }).catch((err) => {
+  }).catch(() => {
     onError();
   });
 };

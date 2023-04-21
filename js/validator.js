@@ -1,6 +1,6 @@
 
-import {sendData} from "./connectionServer.js";
-import {closeEditor, addEventsOnCloseEditor} from "./handler.js";
+import {sendData} from './connectionServer.js';
+import {closeEditor, addEventsOnCloseEditor} from './handler.js';
 
 const form = document.querySelector('#upload-select-image');
 const submitButton = form.querySelector('#upload-submit');
@@ -17,9 +17,9 @@ form.addEventListener('submit', (event) =>{
       successfulSendProcessing,
       errorSendProcessing,
       sentData
-    )
+    );
   }
-})
+});
 
 const body = document.querySelector('body');
 const successMessageTemplate = body.querySelector('#success').content.querySelector('.success');
@@ -86,8 +86,8 @@ function addEventsOnCloseErrorMessage(add){
 
 function checkForEscapeToCloseErrorMassage(evt){
   if(evt.key === 'Escape') {
-    closeErrorMessage()
-  };
+    closeErrorMessage();
+  }
 }
 
 
