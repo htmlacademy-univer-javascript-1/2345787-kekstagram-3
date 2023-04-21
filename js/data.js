@@ -1,6 +1,7 @@
 import {returnNumberFrom} from './utility.js';
 import {getNumber} from './utility.js';
 const DESCRIPTIONS = ['Поползень','Гастеруптиида','Лягушкорот','Квакша','Игуанодонт'];
+//import {sendData} from "./connectionServer";
 
 function generatePhoto(id, url){
   const urlString = `photos/${url}.jpg`;

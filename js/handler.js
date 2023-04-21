@@ -5,25 +5,57 @@ const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadImgPreview = uploadOverlay.querySelector('.img-upload__preview');
 
 let currentEffect = imgUploadForm.querySelector('#effect-none');
+let scaleLevel = 100;
 
 uploadButton.addEventListener('change', openEditor);
-document.addEventListener('keyup', closeEditor);
-closeButton.addEventListener('click', closeEditor);
+
+
+function addEventsOnCloseEditor(add){
+  if (add){
+    document.addEventListener('keyup', checkForEscapeToCloseEditor);
+    closeButton.addEventListener('click', closeEditor);
+  } else {
+    document.removeEventListener('keyup', checkForEscapeToCloseEditor);
+    closeButton.removeEventListener('click', closeEditor);
+  }
+}
+
+function checkForEscapeToCloseEditor(evt){
+  if(evt.key === 'Escape') {
+    closeEditor();
+  }
+}
 
 function openEditor(){
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   resetSlider(currentEffect);
+  uploadIMG();
+  addEventsOnCloseEditor(true);
 }
 
-function closeEditor(evt){
-  if (evt.key === 'Escape' || evt.target === closeButton){
-    uploadOverlay.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    imgUploadForm.reset();
-    uploadImgPreview.style.transform = 'scale(1)';
+function uploadIMG(){
+  let uploadFile = document.querySelector('#upload-file').files[0];
+  let imgPreview = document.querySelector('.img-upload__preview').children[0];
+
+  let fileReader = new FileReader();
+  fileReader.onloadend = function(){
+  imgPreview.src = fileReader.result;
   }
+  fileReader.readAsDataURL(uploadFile);
 }
+
+function closeEditor(){
+  uploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  imgUploadForm.reset();
+  uploadImgPreview.style.transform = 'scale(1)';
+  const nonEffect = checkBoxes[0];
+  toggleEffect(currentEffect, nonEffect);
+  resetSlider(currentEffect);
+  addEventsOnCloseEditor(false);
+}
+
 
 //Задание 9.9.1
 const scaleUpButton = uploadOverlay.querySelector('.scale__control--bigger');
@@ -39,6 +71,7 @@ function scaleUp(){
     value += 25;
     scaleControlForm.value = `${value}%`;
   }
+  scaleLevel = value;
   uploadImgPreview.style.transform = `scale(${value/100})`;
 }
 
@@ -53,6 +86,7 @@ function scaleDown(){
     value -= 25;
     scaleControlForm.value = `${value}%`;
   }
+  scaleLevel = value;
   uploadImgPreview.style.transform = `scale(${value/100})`;
 }
 
@@ -68,60 +102,60 @@ checkBoxes.forEach((effect) => {
 
 function applyingEffect(evt){
   const selectedEffect = evt.target;
-  checkBoxes.forEach((effect) => {
-    if(effect === selectedEffect && selectedEffect !== currentEffect){
-      effect.checked = true;
-      currentEffect.checked = false;
-      uploadImgPreview.classList.remove(`effects__preview--${currentEffect.value}`);
-      uploadImgPreview.classList.add(`effects__preview--${effect.value}`);
-      currentEffect = selectedEffect;
-    }
-  });
+  if(selectedEffect !== currentEffect){
+    toggleEffect(currentEffect, selectedEffect);
+  }
   resetSlider(selectedEffect);
 }
 
+function toggleEffect(previousEffect, newEffect){
+  uploadImgPreview.classList.remove(`effects__preview--${previousEffect.value}`);
+  uploadImgPreview.classList.add(`effects__preview--${newEffect.value}`);
+  newEffect.checked = true;
+  previousEffect.checked = false;
+  currentEffect = newEffect;
+}
+
 //noUiSlider
-
 import '../nouislider/nouislider.js';
-
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectIntensitySlider = document.querySelector('.effect-level__slider');
 
 let initialSliderValue = 100;
 
-const filterValues = {
-  chrome: 'grayscale',
-  sepia: 'sepia',
-  marvin: 'invert',
-  phobos: 'blur',
-  heat: 'brightness'
+const FilterValues = {
+  CHROME: 'grayscale',
+  SEPIA: 'sepia',
+  MARVIN: 'invert',
+  PHOBOS: 'blur',
+  HEAT: 'brightness'
 };
 
-const initialValues = {
-  none: 100,
-  chrome: 0,
-  sepia: 0,
-  marvin: 0,
-  phobos: 0,
-  heat: 1
+const InitialValues = {
+  NONE: 100,
+  CHROME: 0,
+  SEPIA: 0,
+  MARVIN: 0,
+  PHOBOS: 0,
+  HEAT: 1
 };
 
-const maxValues = {
-  none: 100,
-  chrome: 1,
-  sepia: 1,
-  marvin: 100,
-  phobos: 3,
-  heat: 3
+const MaxValues = {
+  NONE: 100,
+  CHROME: 1,
+  SEPIA: 1,
+  MARVIN: 100,
+  PHOBOS: 3,
+  HEAT: 3
 };
 
-const stepValues = {
-  none: 1,
-  chrome: 0.1,
-  sepia: 0.1,
-  marvin: 1,
-  phobos: 0.1,
-  heat: 0.1
+const StepValues = {
+  NONE: 1,
+  CHROME: 0.1,
+  SEPIA: 0.1,
+  MARVIN: 1,
+  PHOBOS: 0.1,
+  HEAT: 0.1
 };
 
 noUiSlider.create(effectIntensitySlider, {
@@ -130,7 +164,8 @@ noUiSlider.create(effectIntensitySlider, {
     min: 0,
     max: 100
   },
-  step: 1
+  step: 1,
+  connect: 'lower'
 });
 
 effectIntensitySlider.noUiSlider.on('update', (sliderValue) => {
@@ -140,21 +175,21 @@ effectIntensitySlider.noUiSlider.on('update', (sliderValue) => {
 
 function updateEffect(effect, value){
   let filterValue = '';
-  switch(currentEffect.value) {
+  switch(currentEffect.value.toLowerCase()) {
     case 'chrome':
-      filterValue = `${filterValues[effect.value]}(${value})`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value})`;
       break;
     case 'sepia':
-      filterValue = `${filterValues[effect.value]}(${value})`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value})`;
       break;
     case 'marvin':
-      filterValue = `${filterValues[effect.value]}(${value}%)`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value}%)`;
       break;
     case 'phobos':
-      filterValue = `${filterValues[effect.value]}(${value}px)`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value}px)`;
       break;
     case 'heat':
-      filterValue = `${filterValues[effect.value]}(${value})`;
+      filterValue = `${FilterValues[effect.value.toUpperCase()]}(${value})`;
       break;
     default:
       filterValue = '';}
@@ -167,14 +202,17 @@ function resetSlider(effect){
   } else {
     effectIntensitySlider.classList.remove('hidden');
   }
-  initialSliderValue = initialValues[effect.value];
+  initialSliderValue = InitialValues[effect.value.toUpperCase()];
   effectLevelValue.value = initialSliderValue;
+
   effectIntensitySlider.noUiSlider.updateOptions({
-    start: maxValues[effect.value],
+    start: MaxValues[effect.value.toUpperCase()],
     range: {
       min : initialSliderValue,
-      max : maxValues[effect.value]
+      max : MaxValues[effect.value.toUpperCase()]
     },
-    step: stepValues[effect.value]
+    step: StepValues[effect.value.toUpperCase()]
   });
 }
+
+export {currentEffect, scaleLevel, closeEditor, addEventsOnCloseEditor}
