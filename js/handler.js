@@ -3,6 +3,7 @@ const uploadOverlay = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadImgPreview = uploadOverlay.querySelector('.img-upload__preview');
+const checkBoxes = imgUploadForm.querySelectorAll('.effects__radio');
 
 let currentEffect = imgUploadForm.querySelector('#effect-none');
 let scaleLevel = 100;
@@ -35,13 +36,13 @@ function openEditor(){
 }
 
 function uploadIMG(){
-  let uploadFile = document.querySelector('#upload-file').files[0];
-  let imgPreview = document.querySelector('.img-upload__preview').children[0];
+  const uploadFile = document.querySelector('#upload-file').files[0];
+  const imgPreview = document.querySelector('.img-upload__preview').children[0];
 
-  let fileReader = new FileReader();
+  const fileReader = new FileReader();
   fileReader.onloadend = function(){
-  imgPreview.src = fileReader.result;
-  }
+    imgPreview.src = fileReader.result;
+  };
   fileReader.readAsDataURL(uploadFile);
 }
 
@@ -94,7 +95,6 @@ scaleDownButton.addEventListener('click', scaleDown);
 
 
 //Задание 9.9.2
-const checkBoxes = imgUploadForm.querySelectorAll('.effects__radio');
 
 checkBoxes.forEach((effect) => {
   effect.addEventListener('click', applyingEffect);

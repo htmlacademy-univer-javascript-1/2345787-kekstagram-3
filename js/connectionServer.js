@@ -7,7 +7,7 @@ const getData = (onSuccess, onError) => {
       response.json().then((content) => {
         onSuccess(content)})
     } else {
-      onError(`Статус ответа: ${response.status} ${response.statusText}`);
+      onError();
     }
   })
 }
@@ -15,8 +15,6 @@ const getData = (onSuccess, onError) => {
 function errorNotification(answer){
   //eslint-disable-next-line
   console.error('Ошибка при получении данных с сервера.')
-  //eslint-disable-next-line
-  console.error(answer);
 }
 
 const sendData = (onSuccess, onError, body)=> {
