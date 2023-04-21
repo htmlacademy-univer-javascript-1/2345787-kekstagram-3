@@ -2,8 +2,7 @@ const SERVER_URL = 'https://27.javascript.pages.academy/kekstagram-simple/data';
 const SERVER_URL_SEND = 'https://27.javascript.pages.academy/kekstagram-simple';
 
 const getData = (onSuccess, onError) => {
-  fetch(SERVER_URL)
-  .then((response) => {
+  fetch(SERVER_URL).then((response)=>{
     if (response.ok) {
       response.json().then((content) => {
         onSuccess(content)})
@@ -14,7 +13,9 @@ const getData = (onSuccess, onError) => {
 }
 
 function errorNotification(answer){
+  //eslint-disable-next-line
   console.error('Ошибка при получении данных с сервера.')
+  //eslint-disable-next-line
   console.error(answer);
 }
 
@@ -25,15 +26,13 @@ const sendData = (onSuccess, onError, body)=> {
       method: 'POST',
       body: body
     }
-  )
-  .then((response) => {
+  ).then((response) => {
     if (response.ok) {
       onSuccess();
     } else {
       onError();
     }
-  })
-  .catch((err) => {
+  }).catch((err) => {
     onError();
   });
 };
