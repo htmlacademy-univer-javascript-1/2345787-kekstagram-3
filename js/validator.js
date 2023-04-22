@@ -4,7 +4,6 @@ import {closeEditor, addEventsOnCloseEditor} from './handler.js';
 
 const form = document.querySelector('#upload-select-image');
 const submitButton = form.querySelector('#upload-submit');
-let errorButton;
 
 const pristine = new Pristine(form);
 
@@ -59,10 +58,10 @@ function errorSendProcessing(){
 
 function showErrorMessage(){
   const errorMessage = errorMessageTemplate.cloneNode(true);
-  const newErrorButton = errorMessage.querySelector('.error__button');
-  errorButton = newErrorButton;
+  const errorButton = errorMessage.querySelector('.error__button');
   addEventsOnCloseEditor(false);
-  addEventsOnCloseErrorMessage(true);
+  errorButton.addEventListener('click', closeErrorMessage);
+  document.addEventListener('keyup', checkForEscapeToCloseErrorMassage);
   body.appendChild(errorMessage);
   errorMessage.style.zIndex = '9999';
 }
@@ -71,17 +70,7 @@ function closeErrorMessage(){
   const errorMessage = body.querySelector('.error');
   errorMessage.remove();
   addEventsOnCloseEditor(true);
-  addEventsOnCloseErrorMessage(false);
-}
-
-function addEventsOnCloseErrorMessage(add){
-  if (add){
-    errorButton.addEventListener('click', closeErrorMessage);
-    document.addEventListener('keyup', checkForEscapeToCloseErrorMassage);
-  } else{
-    errorButton.removeEventListener('click', closeErrorMessage);
-    document.removeEventListener('keyup', checkForEscapeToCloseErrorMassage);
-  }
+  document.removeEventListener('keyup', checkForEscapeToCloseErrorMassage);
 }
 
 function checkForEscapeToCloseErrorMassage(evt){
