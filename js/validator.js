@@ -13,9 +13,7 @@ let closeSuccessMessageOnClickOutside;
 
 const pristine = new Pristine(form);
 
-const checkLegitLength = (string, minLength, maxLength) => {
-  return string >= minLength && string <= maxLength;
-  }
+const checkLegitLength = (string, minLength, maxLength) => string >= minLength && string <= maxLength;
 
   pristine.addValidator(
     form.querySelector('.text__description'),
@@ -114,12 +112,12 @@ function checkForEscapeToCloseErrorMassage(event){
   }
 }
 
-function disableSubmitButton() {
+function disableSubmitButton(){
   submitButton.disabled = true;
   submitButton.textContent = 'Загрузка..';
 }
 
-function enableSubmitButton() {
+function enableSubmitButton(){
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
 }

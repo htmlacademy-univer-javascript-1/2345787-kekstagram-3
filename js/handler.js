@@ -1,5 +1,5 @@
 import '../nouislider/nouislider.js';
-import {checkOfSubmitForm, showErrorMessage} from './validator.js'
+import {checkOfSubmitForm, showErrorMessage} from './validator.js';
 
 const uploadButton = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -14,9 +14,7 @@ const scaleControlForm = uploadOverlay.querySelector('.scale__control--value');
 
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectIntensitySlider = document.querySelector('.effect-level__slider');
-
 let currentEffect = imgUploadForm.querySelector('#effect-none');
-let scaleLevel = 100;
 
 let initialSliderValue = 100;
 
@@ -97,7 +95,7 @@ function uploadIMG(){
     imgPreview.src = fileReader.result;
   };
 
-  if (uploadFile.type.split('/')[0] !== "image") {
+  if (uploadFile.type.split('/')[0] !== 'image') {
     showErrorMessage();
     closeEditor();
     imgUploadForm.reset();
@@ -125,7 +123,6 @@ function scaleUp(){
     value += 25;
     scaleControlForm.value = `${value}%`;
   }
-  scaleLevel = value;
   uploadImgPreview.style.transform = `scale(${value/100})`;
 }
 
