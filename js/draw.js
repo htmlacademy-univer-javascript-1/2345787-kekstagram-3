@@ -2,6 +2,7 @@
 function drawPictures(photos){
   const fragment = document.createDocumentFragment();
   const template = document.querySelector('#picture');
+  const photoBlock = document.querySelector('.pictures');
 
   for(let i = 0; i < photos.length; i++){
     const picture = template.content.cloneNode(true);
@@ -11,8 +12,6 @@ function drawPictures(photos){
     picture.querySelector('.picture__comments').textContent = receivedPhoto.comments;
     fragment.appendChild(picture);
   }
-
-  const photoBlock = document.querySelector('.pictures');
   photoBlock.appendChild(fragment);
 }
 

@@ -1,125 +1,20 @@
+import '../nouislider/nouislider.js';
+import {checkOfSubmitForm, showErrorMessage} from './validator.js';
+
 const uploadButton = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('#upload-cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadImgPreview = uploadOverlay.querySelector('.img-upload__preview');
-const checkBoxes = imgUploadForm.querySelectorAll('.effects__radio');
+const effectsRadioButtons = imgUploadForm.querySelectorAll('.effects__radio');
 
-let currentEffect = imgUploadForm.querySelector('#effect-none');
-let scaleLevel = 100;
-
-uploadButton.addEventListener('change', openEditor);
-
-
-function addEventsOnCloseEditor(add){
-  if (add){
-    document.addEventListener('keyup', checkForEscapeToCloseEditor);
-    closeButton.addEventListener('click', closeEditor);
-  } else {
-    document.removeEventListener('keyup', checkForEscapeToCloseEditor);
-    closeButton.removeEventListener('click', closeEditor);
-  }
-}
-
-function checkForEscapeToCloseEditor(evt){
-  if(evt.key === 'Escape') {
-    closeEditor();
-  }
-}
-
-function openEditor(){
-  uploadOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  resetSlider(currentEffect);
-  uploadIMG();
-  addEventsOnCloseEditor(true);
-}
-
-function uploadIMG(){
-  const uploadFile = document.querySelector('#upload-file').files[0];
-  const imgPreview = document.querySelector('.img-upload__preview').children[0];
-
-  const fileReader = new FileReader();
-  fileReader.onloadend = function(){
-    imgPreview.src = fileReader.result;
-  };
-  fileReader.readAsDataURL(uploadFile);
-}
-
-function closeEditor(){
-  uploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  imgUploadForm.reset();
-  uploadImgPreview.style.transform = 'scale(1)';
-  const nonEffect = checkBoxes[0];
-  toggleEffect(currentEffect, nonEffect);
-  resetSlider(currentEffect);
-  addEventsOnCloseEditor(false);
-}
-
-
-//Задание 9.9.1
 const scaleUpButton = uploadOverlay.querySelector('.scale__control--bigger');
 const scaleDownButton = uploadOverlay.querySelector('.scale__control--smaller');
 const scaleControlForm = uploadOverlay.querySelector('.scale__control--value');
 
-function scaleUp(){
-  let value = Number(scaleControlForm.value.replace('%',''));
-  if ((value + 25) > 100){
-    value = 100;
-    scaleControlForm.value = `${value}%`;
-  } else {
-    value += 25;
-    scaleControlForm.value = `${value}%`;
-  }
-  scaleLevel = value;
-  uploadImgPreview.style.transform = `scale(${value/100})`;
-}
-
-scaleUpButton.addEventListener('click', scaleUp);
-
-function scaleDown(){
-  let value = Number(scaleControlForm.value.replace('%',''));
-  if ((value - 25) < 25){
-    value = 25;
-    scaleControlForm.value = `${value}%`;
-  } else {
-    value -= 25;
-    scaleControlForm.value = `${value}%`;
-  }
-  scaleLevel = value;
-  uploadImgPreview.style.transform = `scale(${value/100})`;
-}
-
-scaleDownButton.addEventListener('click', scaleDown);
-
-
-//Задание 9.9.2
-
-checkBoxes.forEach((effect) => {
-  effect.addEventListener('click', applyingEffect);
-});
-
-function applyingEffect(evt){
-  const selectedEffect = evt.target;
-  if(selectedEffect !== currentEffect){
-    toggleEffect(currentEffect, selectedEffect);
-  }
-  resetSlider(selectedEffect);
-}
-
-function toggleEffect(previousEffect, newEffect){
-  uploadImgPreview.classList.remove(`effects__preview--${previousEffect.value}`);
-  uploadImgPreview.classList.add(`effects__preview--${newEffect.value}`);
-  newEffect.checked = true;
-  previousEffect.checked = false;
-  currentEffect = newEffect;
-}
-
-//noUiSlider
-import '../nouislider/nouislider.js';
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectIntensitySlider = document.querySelector('.effect-level__slider');
+let currentEffect = imgUploadForm.querySelector('#effect-none');
 
 let initialSliderValue = 100;
 
@@ -173,6 +68,113 @@ effectIntensitySlider.noUiSlider.on('update', (sliderValue) => {
   updateEffect(currentEffect, sliderValue);
 });
 
+uploadButton.addEventListener('change', openEditor);
+
+function addEventsOnEditor(needToAdd){
+  if (needToAdd){
+    document.addEventListener('keyup', checkForEscapeToCloseEditor);
+    closeButton.addEventListener('click', closeEditor);
+    imgUploadForm.addEventListener('submit', checkOfSubmitForm);
+    scaleUpButton.addEventListener('click', scaleUp);
+    scaleDownButton.addEventListener('click', scaleDown);
+    effectsRadioButtons.forEach((effect) => {
+      effect.addEventListener('click', applyingEffect);
+    });
+  } else {
+    document.removeEventListener('keyup', checkForEscapeToCloseEditor);
+    closeButton.removeEventListener('click', closeEditor);
+    imgUploadForm.removeEventListener('submit', checkOfSubmitForm);
+    scaleUpButton.removeEventListener('click', scaleUp);
+    scaleDownButton.removeEventListener('click', scaleDown);
+    effectsRadioButtons.forEach((effect) => {
+      effect.removeEventListener('click', applyingEffect);
+    });
+  }
+}
+
+function checkForEscapeToCloseEditor(event){
+  if(event.key === 'Escape') {
+    closeEditor();
+  }
+}
+
+function openEditor(){
+  uploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  resetSlider(currentEffect);
+  addEventsOnEditor(true);
+  uploadIMG();
+}
+
+function uploadIMG(){
+  const uploadFile = document.querySelector('#upload-file').files[0];
+  const imgPreview = document.querySelector('.img-upload__preview').children[0];
+  const fileReader = new FileReader();
+
+  if (uploadFile.type.split('/')[0] !== 'image') {
+    showErrorMessage();
+    closeEditor();
+    imgUploadForm.reset();
+    return;
+  }
+
+  fileReader.onloadend = function(){
+    imgPreview.src = fileReader.result;
+  };
+  fileReader.readAsDataURL(uploadFile);
+}
+
+function closeEditor(){
+  uploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  imgUploadForm.reset();
+  uploadImgPreview.style.transform = 'scale(1)';
+  const nonEffect = effectsRadioButtons[0];
+  toggleEffect(currentEffect, nonEffect);
+  resetSlider(currentEffect);
+  addEventsOnEditor(false);
+}
+
+function scaleUp(){
+  let value = Number(scaleControlForm.value.replace('%',''));
+  if ((value + 25) > 100){
+    value = 100;
+    scaleControlForm.value = `${value}%`;
+  } else {
+    value += 25;
+    scaleControlForm.value = `${value}%`;
+  }
+  uploadImgPreview.style.transform = `scale(${value/100})`;
+}
+
+function scaleDown(){
+  let value = Number(scaleControlForm.value.replace('%',''));
+  if ((value - 25) < 25){
+    value = 25;
+    scaleControlForm.value = `${value}%`;
+  } else {
+    value -= 25;
+    scaleControlForm.value = `${value}%`;
+  }
+  uploadImgPreview.style.transform = `scale(${value/100})`;
+}
+
+function applyingEffect(event){
+  const selectedEffect = event.target;
+  if(selectedEffect !== currentEffect){
+    toggleEffect(currentEffect, selectedEffect);
+  }
+  resetSlider(selectedEffect);
+}
+
+function toggleEffect(previousEffect, newEffect){
+  uploadImgPreview.classList.remove(`effects__preview--${previousEffect.value}`);
+  uploadImgPreview.classList.add(`effects__preview--${newEffect.value}`);
+  newEffect.checked = true;
+  previousEffect.checked = false;
+  currentEffect = newEffect;
+}
+
 function updateEffect(effect, value){
   let filterValue = '';
   switch(currentEffect.value.toLowerCase()) {
@@ -215,4 +217,4 @@ function resetSlider(effect){
   });
 }
 
-export {currentEffect, scaleLevel, closeEditor, addEventsOnCloseEditor};
+export {closeEditor, addEventsOnEditor};
