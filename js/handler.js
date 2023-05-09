@@ -53,6 +53,21 @@ const StepValues = {
   HEAT: 0.1
 };
 
+noUiSlider.create(effectIntensitySlider, {
+  start: initialSliderValue,
+  range: {
+    min: 0,
+    max: 100
+  },
+  step: 1,
+  connect: 'lower'
+});
+
+effectIntensitySlider.noUiSlider.on('update', (sliderValue) => {
+  effectLevelValue.value = sliderValue;
+  updateEffect(currentEffect, sliderValue);
+});
+
 uploadButton.addEventListener('change', openEditor);
 
 function addEventsOnEditor(needToAdd){
@@ -62,12 +77,18 @@ function addEventsOnEditor(needToAdd){
     imgUploadForm.addEventListener('submit', checkOfSubmitForm);
     scaleUpButton.addEventListener('click', scaleUp);
     scaleDownButton.addEventListener('click', scaleDown);
+    effectsRadioButtons.forEach((effect) => {
+      effect.addEventListener('click', applyingEffect);
+    });
   } else {
     document.removeEventListener('keyup', checkForEscapeToCloseEditor);
     closeButton.removeEventListener('click', closeEditor);
     imgUploadForm.removeEventListener('submit', checkOfSubmitForm);
     scaleUpButton.removeEventListener('click', scaleUp);
     scaleDownButton.removeEventListener('click', scaleDown);
+    effectsRadioButtons.forEach((effect) => {
+      effect.removeEventListener('click', applyingEffect);
+    });
   }
 }
 
@@ -138,10 +159,6 @@ function scaleDown(){
   uploadImgPreview.style.transform = `scale(${value/100})`;
 }
 
-effectsRadioButtons.forEach((effect) => {
-  effect.addEventListener('click', applyingEffect);
-});
-
 function applyingEffect(event){
   const selectedEffect = event.target;
   if(selectedEffect !== currentEffect){
@@ -157,21 +174,6 @@ function toggleEffect(previousEffect, newEffect){
   previousEffect.checked = false;
   currentEffect = newEffect;
 }
-
-noUiSlider.create(effectIntensitySlider, {
-  start: initialSliderValue,
-  range: {
-    min: 0,
-    max: 100
-  },
-  step: 1,
-  connect: 'lower'
-});
-
-effectIntensitySlider.noUiSlider.on('update', (sliderValue) => {
-  effectLevelValue.value = sliderValue;
-  updateEffect(currentEffect, sliderValue);
-});
 
 function updateEffect(effect, value){
   let filterValue = '';

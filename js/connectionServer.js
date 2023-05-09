@@ -2,24 +2,28 @@ const SERVER_URL_DATA = 'https://27.javascript.pages.academy/kekstagram-simple/d
 const SERVER_URL_SEND = 'https://27.javascript.pages.academy/kekstagram-simple';
 
 const getData = (onSuccess, onError) => {
-  fetch(SERVER_URL_DATA).then((response)=>{
-    if (response.ok) {
-      response.json().then((content) => {
-        onSuccess(content);
-      });
-    } else {
-      onError();
-    }
-  });
+  fetch(SERVER_URL_DATA)
+    .then((response) => {
+      if (response.ok) {
+        response.json().then((content) => {
+          onSuccess(content);
+        });
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    })
+    .catch((error) => {
+      onError('Ошибка запроса данных с сервера');
+    });
 };
 
-function errorNotification(){
+function showServerDataErrorMessage(errorMessage){
   const body = document.querySelector('body');
   const messageBlock = document.createElement('div');
   const messageText = document.createElement('p');
   const closeButton = document.createElement('button');
   messageBlock.classList.add('data-upload__message');
-  messageText.textContent = 'Ошибка запроса данных с сервера';
+  messageText.textContent = errorMessage;
   messageBlock.appendChild(messageText);
   closeButton.textContent = 'Закрыть';
   closeButton.classList.add('close-button');
@@ -48,4 +52,4 @@ const sendData = (onSuccess, onError, body) => {
   });
 };
 
-export {getData, errorNotification, sendData};
+export {getData, showServerDataErrorMessage, sendData};
