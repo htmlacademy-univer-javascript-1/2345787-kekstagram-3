@@ -1,8 +1,8 @@
-const SERVER_URL = 'https://27.javascript.pages.academy/kekstagram-simple/data';
+const SERVER_URL_DATA = 'https://27.javascript.pages.academy/kekstagram-simple/data';
 const SERVER_URL_SEND = 'https://27.javascript.pages.academy/kekstagram-simple';
 
 const getData = (onSuccess, onError) => {
-  fetch(SERVER_URL).then((response)=>{
+  fetch(SERVER_URL_DATA).then((response)=>{
     if (response.ok) {
       response.json().then((content) => {
         onSuccess(content);
@@ -37,4 +37,4 @@ const sendData = (onSuccess, onError, body)=> {
 };
 
 
-export {getData, errorNotification, sendData, SERVER_URL};
+export {getData, errorNotification, sendData};
