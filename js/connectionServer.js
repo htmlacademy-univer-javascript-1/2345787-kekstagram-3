@@ -12,7 +12,7 @@ const getData = (onSuccess, onError) => {
         throw new Error('Network response was not ok');
       }
     })
-    .catch((error) => {
+    .catch(() => {
       onError('Ошибка запроса данных с сервера');
     });
 };
