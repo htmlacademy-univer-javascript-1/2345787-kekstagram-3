@@ -14,8 +14,20 @@ const getData = (onSuccess, onError) => {
 };
 
 function errorNotification(){
-  //eslint-disable-next-line
-  console.error('Ошибка при получении данных с сервера.')
+  const body = document.querySelector('body');
+  const messageBlock = document.createElement('div');
+  const messageText = document.createElement('p');
+  const closeButton = document.createElement('button');
+  messageBlock.classList.add('data-upload__message');
+  messageText.textContent = 'Ошибка запроса данных с сервера';
+  messageBlock.appendChild(messageText);
+  closeButton.textContent = 'Закрыть';
+  closeButton.classList.add('close-button');
+  closeButton.addEventListener('click', () => {
+    messageBlock.remove();
+  });
+  messageBlock.appendChild(closeButton);
+  body.appendChild(messageBlock);
 }
 
 const sendData = (onSuccess, onError, body) => {
