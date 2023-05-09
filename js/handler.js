@@ -59,14 +59,12 @@ function addEventsOnEditor(needToAdd){
   if (needToAdd){
     document.addEventListener('keyup', checkForEscapeToCloseEditor);
     closeButton.addEventListener('click', closeEditor);
-    //imgUploadForm -> form
     imgUploadForm.addEventListener('submit', checkOfSubmitForm);
     scaleUpButton.addEventListener('click', scaleUp);
     scaleDownButton.addEventListener('click', scaleDown);
   } else {
     document.removeEventListener('keyup', checkForEscapeToCloseEditor);
     closeButton.removeEventListener('click', closeEditor);
-    //imgUploadForm -> form
     imgUploadForm.removeEventListener('submit', checkOfSubmitForm);
     scaleUpButton.removeEventListener('click', scaleUp);
     scaleDownButton.removeEventListener('click', scaleDown);
@@ -91,15 +89,17 @@ function uploadIMG(){
   const uploadFile = document.querySelector('#upload-file').files[0];
   const imgPreview = document.querySelector('.img-upload__preview').children[0];
   const fileReader = new FileReader();
-  fileReader.onloadend = function(){
-    imgPreview.src = fileReader.result;
-  };
 
   if (uploadFile.type.split('/')[0] !== 'image') {
     showErrorMessage();
     closeEditor();
     imgUploadForm.reset();
+    return;
   }
+
+  fileReader.onloadend = function(){
+    imgPreview.src = fileReader.result;
+  };
   fileReader.readAsDataURL(uploadFile);
 }
 

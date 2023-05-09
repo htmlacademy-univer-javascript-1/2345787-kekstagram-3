@@ -1,4 +1,3 @@
-
 import {sendData} from './connectionServer.js';
 import {closeEditor, addEventsOnEditor} from './handler.js';
 
@@ -11,9 +10,14 @@ const errorMessageTemplate =  body.querySelector('#error').content.querySelector
 let closeErrorMessageOnClickOutside;
 let closeSuccessMessageOnClickOutside;
 
-const pristine = new Pristine(form);
+const pristine = new Pristine(form, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'span',
+  errorTextClass: 'form-input__error'
+});
 
-const checkLegitLength = (string, minLength, maxLength) => string >= minLength && string <= maxLength;
+const checkLegitLength = (stringLength, minLength, maxLength) => stringLength >= minLength && stringLength <= maxLength;
 
 pristine.addValidator(
   form.querySelector('.text__description'),
@@ -35,8 +39,6 @@ function checkOfSubmitForm(event){
       errorSendProcessing,
       sentData
     );
-  } else {
-    errorSendProcessing();
   }
 }
 

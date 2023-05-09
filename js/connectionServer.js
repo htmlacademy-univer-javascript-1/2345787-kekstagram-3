@@ -18,7 +18,7 @@ function errorNotification(){
   console.error('Ошибка при получении данных с сервера.')
 }
 
-const sendData = (onSuccess, onError, body)=> {
+const sendData = (onSuccess, onError, body) => {
   fetch(
     SERVER_URL_SEND,
     {
@@ -35,6 +35,5 @@ const sendData = (onSuccess, onError, body)=> {
     onError();
   });
 };
-
 
 export {getData, errorNotification, sendData};
