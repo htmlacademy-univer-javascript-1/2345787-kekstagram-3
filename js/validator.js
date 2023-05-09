@@ -15,15 +15,15 @@ const pristine = new Pristine(form);
 
 const checkLegitLength = (string, minLength, maxLength) => string >= minLength && string <= maxLength;
 
-  pristine.addValidator(
-    form.querySelector('.text__description'),
-    (value) => {
-      const minlenght = 20;
-      const maxlenght = 140;
-      return checkLegitLength(value.length, minlenght, maxlenght - 1);
-    },
-    'Описание должно быть не менее 20 и не более 140 символов'
-  );
+pristine.addValidator(
+  form.querySelector('.text__description'),
+  (value) => {
+    const minlenght = 20;
+    const maxlenght = 140;
+    return checkLegitLength(value.length, minlenght, maxlenght - 1);
+  },
+  'Описание должно быть не менее 20 и не более 140 символов'
+);
 
 function checkOfSubmitForm(event){
   event.preventDefault();
@@ -36,7 +36,7 @@ function checkOfSubmitForm(event){
       sentData
     );
   } else {
-    errorSendProcessing;
+    errorSendProcessing();
   }
 }
 
@@ -51,7 +51,7 @@ function showSuccessMessage(){
     if (event.target === successMessage) {
       closeSuccessMessage();
     }
-  }
+  };
   body.addEventListener('click',closeSuccessMessageOnClickOutside);
 }
 
@@ -94,7 +94,7 @@ function showErrorMessage(){
     if (event.target === errorMessage) {
       closeErrorMessage();
     }
-  }
+  };
   body.addEventListener('click',closeErrorMessageOnClickOutside);
 }
 
@@ -122,4 +122,4 @@ function enableSubmitButton(){
   submitButton.textContent = 'Опубликовать';
 }
 
-export {checkOfSubmitForm, showErrorMessage}
+export {checkOfSubmitForm, showErrorMessage};

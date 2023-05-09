@@ -135,7 +135,6 @@ function scaleDown(){
     value -= 25;
     scaleControlForm.value = `${value}%`;
   }
-  scaleLevel = value;
   uploadImgPreview.style.transform = `scale(${value/100})`;
 }
 
